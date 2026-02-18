@@ -33,9 +33,21 @@ def convert_v5python(input_file):
         f.write(code)
     
     # Prepare the vex_project_settings.json content
-    creation_date = datetime.now().strftime("%m/%d/%Y, %I:%M:%S %p")
-    slot = data.get('slot', 1) + 1
+    # Prompt the user for the slot number
+    while True:
+        try:
+            slot_input = input("Enter slot number (1-8): ").strip()
+            slot = int(slot_input)
+            if 1 <= slot <= 8:
+                break
+            else:
+                print("Slot number must be between 1 and 8.")
+        except ValueError:
+            print("Please enter a valid integer.")
+    
     sdk_version = 'V5_1_0_1_25'
+    creation_date = datetime.now().strftime("%m/%d/%Y, %I:%M:%S %p")
+
     
     settings = {
         "extension": {
@@ -97,3 +109,4 @@ if __name__ == '__main__':
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)
+
